@@ -12,6 +12,7 @@ text(x=quantile(exp.null[,1],0.95),y=200,"0.05",adj=c(1,0),col="red")
 text(x=org.diiff,y=200,"org.diff",adj = c(1,0),col="blue")
 p.val=sum(exp.null[,1]>org.diiff)/length(exp.null[,1])
 p.val
+##p.val = 0.001
 #start of 3.2.2
 stats::t.test(gene1,gene2)
 stats::t.test(gene1,gene2,var.equal=TRUE)
