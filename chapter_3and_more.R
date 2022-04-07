@@ -26,4 +26,29 @@ stats::t.test(gene1,gene2,var.equal=TRUE)
 ##4.057728  2.185149 
 
 ##start of 3.2.3
+##start of 3.2.4
+set.seed(100)
+gset=rnorm(3000,mean=200,sd=70)
+data=matrix(gset,ncol=6)
+group1=1:3
+group2=4:6
+n1=3
+n2=3
+dx=rowMeans(data[,group1])-rowMeans(data[,group2])
+require(matrixstats)
+
+
+##start 3.2.3
+##quvalue package installation
+if(!require("BiocManager",quietly=TRUE))install.packages("BiocManager")
+BiocManager::install("qvalue")
 library(qvalue)
+data("hedenfalk")
+qvalues<-qvalue(hedenfalk$p)$q
+qresult<-qvalue(hedenfalk$p)$q
+bonf.pval<-p.adjust(hedenfalk$p,method="bonferroni")
+fdr.adj.pval<-p.adjust(hedenfalk$p,method="fdr")
+plot(hedenfalk$p,qresult,pch=19,ylim=c(0,1),xlab="raw p-values",ylab="adjusted p-values")
+points(hedenfalk$p,bonf.pval,pch=19,col="red")
+points(hedenfalk$p,fdr.adj.pval,pch=19,col="blue")
+legend("bottomright",legend=c("q-value","FDR (BH)","Bonferroni"),fill=c("black","blue","red"))
